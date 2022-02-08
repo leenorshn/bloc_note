@@ -9,6 +9,24 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  late int _p;
+
+  @override
+  void initState() {
+    _p = 10;
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant MainScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,21 +44,28 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          return Card(
-            margin: EdgeInsets.only(top: 1),
-            child: ListTile(
-              title: const Text("Barack"),
-              subtitle: const Text("0978785643"),
-              trailing: const Icon(CupertinoIcons.phone),
-              leading: CircleAvatar(
-                child: Text("${index + 1}"),
-              ),
-            ),
-          );
-        },
+
+      body: Center(
+        child: Text(
+          "$_p",
+          style: TextStyle(fontSize: 40),
+        ),
       ),
+      // body: ListView.builder(
+      //   itemBuilder: (context, index) {
+      //     return Card(
+      //       margin: EdgeInsets.only(top: 1),
+      //       child: ListTile(
+      //         title: const Text("Barack"),
+      //         subtitle: const Text("0978785643"),
+      //         trailing: const Icon(CupertinoIcons.phone),
+      //         leading: CircleAvatar(
+      //           child: Text("${index + 1}"),
+      //         ),
+      //       ),
+      //     );
+      //   },
+      // ),
       /*body: Container(
         padding: EdgeInsets.all(32),
         margin: EdgeInsets.all(56),
@@ -58,7 +83,9 @@ class _MainScreenState extends State<MainScreen> {
       // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print("Bonjour Ir Alfred");
+          setState(() {
+            _p = _p + 20;
+          });
         },
         child: const Icon(CupertinoIcons.add),
       ),
