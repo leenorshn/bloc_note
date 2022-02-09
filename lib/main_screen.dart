@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,19 +19,35 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
   }
 
-  @override
-  void didUpdateWidget(covariant MainScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
+  late Timer timer;
+  int start = 30;
+
+  void countDown() {
+    const duree = Duration(seconds: 1);
+    timer = Timer.periodic(duree, (Timer _time) {
+      if (start == 0) {
+        setState(() {
+          timer.cancel();
+          start = 30;
+        });
+      } else {
+        setState(() {
+          start--;
+        });
+      }
+    });
   }
 
   @override
   void dispose() {
+    timer.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("bloc note"),
         elevation: 1,
@@ -47,8 +65,8 @@ class _MainScreenState extends State<MainScreen> {
 
       body: Center(
         child: Text(
-          "$_p",
-          style: TextStyle(fontSize: 40),
+          "$start",
+          style: const TextStyle(fontSize: 40),
         ),
       ),
       // body: ListView.builder(
@@ -83,9 +101,7 @@ class _MainScreenState extends State<MainScreen> {
       // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
-            _p = _p + 20;
-          });
+          countDown();
         },
         child: const Icon(CupertinoIcons.add),
       ),
